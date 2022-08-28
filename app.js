@@ -23,7 +23,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors(corsOptions))
 app.use('/users', users)
 
-const mongo_uri = "mongodb+srv://Fjskk124qsbdfj:m9M3j4Dg5wQFTOBW@cluster0.pnirg16.mongodb.net/?retryWrites=true&w=majority"
+const mongo_uri = process.env.DB_CONNECTION
 
 mongoose.connect(mongo_uri, {
     useNewUrlParser: true,
