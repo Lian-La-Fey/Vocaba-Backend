@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
         const token = new Token({ userId: newUser._id, token: crypto.randomBytes(32).toString("hex")})
         await token.save();
         
-        const url = `http://localhost:3000/users/${newUser._id}/verify/${token.token}`;
+        const url = `${process.env.CLIENT_URL}/users/${newUser._id}/verify/${token.token}`;
         await sendEmail(newUser.email, "Verify Email", url);
         
         await newUser.save()
@@ -170,7 +170,7 @@ router.post("/password-link", async (req, res) => {
             await token.save()
         }
         
-        const url = `http://localhost:3000/reset-password/${user._id}/${token.token}`;
+        const url = `${process.env.CLIENT_URL}/reset-password/${user._id}/${token.token}`;
         await sendEmail(user.email, "Password Reset", url);
         
         res.status(200).send({ message: "Password reset link sent to your email account" })
