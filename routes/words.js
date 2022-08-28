@@ -5,36 +5,49 @@ import validateObjectId from '../middleware/validateObjectId.js';
 
 const router = express.Router()
 
-// create word
-router.post('/', auth, async (req, res) => {
-    // const { error } = validate(req.body)
-    // if ( error )
-    //     res.status(400).send({ message: error.details[0].message })
-    
-    const word = await new Word(req.body).save()
-    res.status(201).send({ data: word, message: "Word Created"})
-})
-
-
-// get all user's words
-router.get('/userWords/:id', async (req, res) => {
-    const { userId } = { ...req.params }
-    const words = await Word.find({user: userId})
-    res.status(200).send({ data: words })
-})
-
 // get word by id
 router.get('/:id', async (req, res) => {
-    const { id } = { ...req.params }
-    const word = await Word.findById(id)
-    res.status(200).send({ data: word })
+    const { id } = req.params
+    try {
+        const word = await Word.findById(id)
+        res.status(200).send({ data: word })
+    } catch (error) {
+        res.status(400).send({ message: "Database Error" })
+    }  
 })
 
+// create word
+router.post('/:userId', auth, async (req, res) => {
+    try {
+        const newWord = {...req.body, user: req.params.userId }
+        newWord.createdAt = new Date()
+        const date = new Date()
+        date.setDate(date.getDate() + 1)
+        newWord.nextProgress = date
+        const { error } = validate(newWord)
+        if ( error )
+            return res.status(400).send({ message: error.details[0].message })
+        const word = new Word(newWord)
+        await word.save()
+        res.status(201).send(word)
+    } catch (error) {
+        console.log(error);
+        res.status(404).send({ message: "Database Error" })
+    }
+    
+})
 
 // Update word
 router.patch('/:id', [validateObjectId, auth], async (req, res) => {
-    const word = await Word.findByIdAndUpdate(req.params.id, { $set: req.body}, {new: true})
-    res.send({ data: word, message: "Word updated successfully" })
+    try {
+        const { error } = validate(req.body)
+        if ( error )
+            return res.status(400).send({ message: error.details[0].message })
+        const word = await Word.findByIdAndUpdate(req.params.id, { $set: req.body}, {new: true})
+        res.send(word)
+    } catch (error) {
+        res.status(400).send({message: "Database Error"})
+    }
 })
 
 // delete word
@@ -43,6 +56,15 @@ router.delete('/:id', [validateObjectId, auth], async (req, res) => {
     res.status(200).send({ message: "Word deleted successfully" })
 })
 
-export default router
+// get all user words
+router.get('/userWords/:userId', auth, async (req, res) => {
+    try {
+        const words = await Word.find({user: req.params.userId}).select("-__v")
+        res.status(200).send(words)
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({ message: "Database Error" })
+    }
+})
 
-// https://stackoverflow.com/questions/47790025/mongoose-findbyidandupdate-finds-returns-object-but-does-not-update
+export default router

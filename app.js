@@ -5,7 +5,6 @@ import mongoose from 'mongoose'
 import morgan from 'morgan';
 import users from './routes/users.js'
 import auth from './routes/auth.js';
-import lists from './routes/lists.js';
 import words from './routes/words.js';
 
 dotenv.config()
@@ -45,7 +44,6 @@ app.get('/', (req, res) => {
 
 app.use("/api/users", users)
 app.use("/api/login", auth)
-app.use("/api/lists", lists)
 app.use("/api/words", words)
 
 app.listen(port, () => {
