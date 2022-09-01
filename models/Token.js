@@ -8,7 +8,7 @@ const tokenSchema = new mongoose.Schema({
     unique: true,
   },
   token: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now },
 });
 
 tokenSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 })
