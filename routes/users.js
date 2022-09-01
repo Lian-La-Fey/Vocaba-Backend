@@ -65,7 +65,7 @@ router.patch('/:id', [validateObjectId, auth], async (req, res) => {
             return res.status(400).send({ message: error.details[0].message })
         const { password, userName, email } = req.body
         const registered = await User.findOne({$or:[{userName: userName}, {email: email}]})
-        if ( registered && registered._id !== id )
+        if ( registered && registered.id !== id )
             return res.status(400).send({ message: "This user is already registered." })
             
         const user = await User.findById(id)
