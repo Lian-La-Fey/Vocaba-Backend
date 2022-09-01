@@ -59,10 +59,10 @@ export const validate = (user) => {
       .min(3)
       .max(12)
       .required()
-      .pattern(new RegExp(/^[^\s]([a-zA-Z_-]+\s?)+[a-zA-Z_-]+$/))
+      .pattern(new RegExp(/^[^\s]([a-zA-Z0-9_-]+\s?)+[a-zA-Z0-9_-]+$/))
       .messages({
         "string.pattern.base":
-          "Invalid username. Only letters, numbers, middle white space and underscore allowed.",
+          "Invalid username. Only letters, numbers, middle white space, hypehn and underscore allowed.",
         "string.min": "Invalid username. Minimum 3 character required.",
         "string.max": "Invalid username. Maximum 12 characters allowed.",
       }),
@@ -78,10 +78,10 @@ export const validateSingleList = (list) => {
     list: Joi.string()
       .min(3)
       .max(24)
-      .pattern(new RegExp(/^[^\s]([a-zA-Z']+\s?)+[a-zA-Z']+$/))
+      .pattern(new RegExp(/^[^\s]([a-zA-Z0-9-']+\s?)+[a-zA-Z0-9-']+$/))
       .messages({
         "string.pattern.base":
-          "Invalid list name. Only letters, ', and middle white space allowed!",
+        "Invalid list name. Only letters, numbers, middle white space, hypehn and backtick allowed.",
         "string.min": "Invalid list name. Minimum 3 character required.",
         "string.max": "Invalid list name. Maximum 24 characters allowed.",
       })
