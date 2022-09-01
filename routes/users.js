@@ -59,15 +59,16 @@ router.post('/', async (req, res) => {
 // update user info
 router.patch('/:id', [validateObjectId, auth], async (req, res) => {
     try {
+        const { id } = req.params
         const { error } = validate(req.body)
         if( error ) 
             return res.status(400).send({ message: error.details[0].message })
         const { password, userName, email } = req.body
-        
-        if ( await User.findOne({ userName: userName }) )
-            return res.status(400).send({ message: "This username is already in use." })
+        const registered = await User.findOne({$or:[{userName: userName}, {email: email}]})
+        if ( registered && registered._id !== id )
+            return res.status(400).send({ message: "This user is already registered." })
             
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(id)
         const match = await bcrypt.compare(password, user.password);
         if (!match)
             return res.status(400).send({ message: "Incorrect password" });
