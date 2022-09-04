@@ -4,8 +4,11 @@
   "description": "Vocaba Backend",
   "main": "app.js",
   "type": "module",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
-    "test": "node app.js"
+    "start": "node app.js"
   },
   "author": "Lian La-Fey",
   "license": "ISC",
