@@ -8,7 +8,7 @@ import crypto from "crypto";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", { 'Content-Type': 'application/json' }, async (req, res) => {
   const { email, password } = req.body;
 
   try {
