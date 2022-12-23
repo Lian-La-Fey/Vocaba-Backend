@@ -28,6 +28,10 @@ const mongo_uri = process.env.DB_CONNECTION
 mongoose.connect(mongo_uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    maxIdleTimeMS: 80000,
+    serverSelectionTimeoutMS: 80000,
+    socketTimeoutMS: 0,
+    connectTimeoutMS: 0
 })
     .then(() => {
         console.log("Connected to Database")
