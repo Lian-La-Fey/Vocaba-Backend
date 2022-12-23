@@ -8,10 +8,10 @@ import crypto from "crypto";
 
 const router = express.Router();
 
-router.post("/", { 'Content-Type': 'application/json' }, async (req, res) => {
-  const { email, password } = req.body;
-
+router.post("/", async (req, res) => {
+  
   try {
+    const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user)
       return res.status(400).send({ message: "Email is not registered" });
