@@ -6,7 +6,6 @@ import morgan from 'morgan';
 import users from './routes/users.js'
 import auth from './routes/auth.js';
 import words from './routes/words.js';
-import vercelCors from './middleware/vercelCors.js';
 
 dotenv.config()
 
@@ -22,7 +21,6 @@ app.use(morgan("dev"))
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors(corsOptions))
-app.use(vercelCors)
 app.use('/users', users)
 
 const mongo_uri = process.env.DB_CONNECTION
