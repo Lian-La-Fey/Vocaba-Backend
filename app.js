@@ -21,6 +21,16 @@ app.use(morgan("dev"))
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors(corsOptions))
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', 'https://vocaba.netlify.app/login')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Origin, X-Auth-Token, X-JSON'
+    )
+    next();
+  })
 
 const mongo_uri = process.env.DB_CONNECTION
 
