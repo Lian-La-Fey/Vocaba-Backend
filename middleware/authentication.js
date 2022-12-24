@@ -9,6 +9,7 @@ const auth = async (req, res, next) => {
         let decodedData;
         decodedData = jwt.verify(token, process.env.JWT_PRIVATE_KEY)
         req.userId = decodedData?.id;
+        console.log(req.userId)
         next();
     } catch (error) {
         res.status(404).send({ message: "Invalid Token" })
