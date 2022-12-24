@@ -9,12 +9,10 @@ import crypto from "crypto";
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  console.log(req.headers)
-  console.log(req.params)
-  console.log(req.body)
-  console.log(req)
+
+  const { email, password } = req.body;
+  
   try {
-    const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user)
       return res.status(400).send({ message: "Email is not registered" });
