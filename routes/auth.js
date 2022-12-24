@@ -9,7 +9,10 @@ import crypto from "crypto";
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  
+  console.log(req.headers)
+  console.log(req.params)
+  console.log(req.body)
+  console.log(req)
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
