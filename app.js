@@ -20,6 +20,7 @@ var corsOptions = {
 app.use(morgan("dev"))
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
+app.use(cors(corsOptions))
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader('Access-Control-Allow-Origin', '*')
