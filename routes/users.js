@@ -252,6 +252,7 @@ router.put('/createList/:id', auth, async (req, res) => {
         await user.save()
         res.status(200).send(user)
     } catch (error) {
+        console.log(error)
         res.status(400).send({message: "Failed Updating"})
     }
 })
@@ -276,6 +277,7 @@ router.patch('/:id/:list', auth, async(req, res) => {
         await user.save()
         res.status(200).send(user)
     } catch (error) {
+        console.log(error)
         res.status(404).send({message: "Failed to change list name"})
     }
 })
@@ -299,6 +301,7 @@ router.put('/deleteList/:id/:list', auth, async(req, res) => {
         await user.save()
         res.status(200).send(user)
     } catch (error) {
+        console.log(error)
         res.status(404).send({message: "Failed"})
     }
 })
